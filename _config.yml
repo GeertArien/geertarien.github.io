@@ -1,0 +1,96 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: Geert Arien
+email: geert.arien@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  Personal portfolio and programming blog of Geert Arien, a fulltime code
+  geek with a passion for mathematics.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://www.geertarien.com" # the base hostname & protocol for your site, e.g. http://example.com
+logo: /assets/images/logo.png
+lang: en_US
+
+author:
+  name: Geert Ariën
+  bio: Fulltime code geek with a passion for mathematics.
+  location: Antwerp, BE
+  twitter: GeertArien
+
+twitter:
+  username: geertarien
+linkedin:
+  username: geertarien
+github:
+  username:  geertarien
+flickr:
+  username: geertarien
+
+social:
+  name: Geert Arien
+  links:
+    - https://twitter.com/geertarien
+    - https://www.linkedin.com/in/geertarien
+    - https://github.com/geertarien
+    - https://www.flickr.com/photos/geertarien/
+
+webmaster_verifications:
+  bing: 197AC2A388B452A692BBADCC7F857648
+
+google_analytics: UA-97021894-1
+
+disqus:
+  shortname:  geert-arien
+
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:day/:title/
+    type: post
+  projects:
+    output: true
+    permalink: /projects/:title/
+    type: project
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/logo.png
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      type: "post"
+  -
+    scope:
+      path: ""
+      type: "projects"
+    values:
+      type: "project"
+
+# Build settings
+markdown: kramdown
+#theme: minima
+gems:
+  - jekyll-feed
+  - jekyll-seo-tag
+exclude:
+  - Gemfile
+  - Gemfile.lock
+
+sass:
+  style: :compressed
