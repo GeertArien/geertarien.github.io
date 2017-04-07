@@ -2,7 +2,7 @@
 layout: post
 title:  "Hello World!"
 date:   2017-04-01 12:33:47 +0100
-date-modified: 2017-04-07
+last_modified_at: 2017-04-07
 categories: general
 sidebar: true
 text: true

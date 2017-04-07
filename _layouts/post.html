@@ -28,9 +28,9 @@ layout: default
     </time>
     {% endif %}
 
-    {% if page.date-modified %}
+    {% if page.last_modified_at %}
       <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
-        - Last modified on <span>{{ page.date-modified | date: "%b %-d, %Y" }}</span>
+        - Last modified on <span>{{ page.last_modified_at | date: "%b %-d, %Y" }}</span>
       </time>
     {% endif %}
 
