@@ -2,7 +2,7 @@
 layout: post
 title:  "Hello World!"
 date:   2017-04-01 12:33:47 +0100
-date-modified:
+date-modified: 2017-04-07
 categories: general
 sidebar: true
 text: true
@@ -50,9 +50,9 @@ alt="Skyline Antwerp"
 At my current job I'm building up a lot of valuable experience when it comes to
 working on large software projects. Such as the dynamic between the different
 teams and roles, as well as the decision making process. At the same time I also
-freed some time for myself to expand my technical knowhow. And that is where this
-website comes into play, it serves as a way for others, as well as myself,
-to track my progress and estimate my skill level.
+decided to schedule some time for myself to expand my technical knowhow. And
+that is where this website comes into play, it serves as a way for others, as
+well as myself, to track my progress and estimate my skill level.
 
 I have a keen interest in programming, mathematics (what better way to spend a
 Saturday afternoon than with pen, paper and a few equations right? Just kidding)
