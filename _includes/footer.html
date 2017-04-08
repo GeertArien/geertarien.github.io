@@ -8,7 +8,7 @@
             <ul class="pages">
               {% assign sorted_pages = site.pages | sort:"order" %}
               {% for node in sorted_pages %}
-                {% if node.title %}
+                {% if node.title and node.order %}
                 <li class="nav-link">
                   <a class="reverse" href="{{ node.url | relative_url }}">{{ node.title | escape }}</a>
                 </li>
