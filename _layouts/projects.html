@@ -17,8 +17,7 @@ layout: default
 		<article class="col-33">
 				<figure>
 					<div>
-						{% assign filename = project.path | replace: '.markdown', '' | replace: '_projects/', '' %}
-					 <img class="responsive" src="/assets/images/projects/{{ filename }}.jpg" alt="">
+					 <img class="responsive" src="{{ project.image }}" alt="">
 				 </div>
 
 					 <figcaption>
