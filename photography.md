@@ -11,4 +11,4 @@ custom_js:
 - gallery
 ---
 
-More info and high-res versions on [Flickr](https://www.flickr.com/photos/98165589@N05/).
+More info and high-res versions on [Flickr](https://www.flickr.com/photos/geertarien/).

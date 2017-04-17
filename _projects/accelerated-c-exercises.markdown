@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "C++ Accelerated exercises"
+title:  "Accelerated C++ exercises"
 tags: C++ STL object-oriented
 sidebar: true
 text: true
