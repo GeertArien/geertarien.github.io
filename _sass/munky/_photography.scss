@@ -10,6 +10,7 @@ section#photos article {
 
 .gallery img {
   -webkit-transform: scale(1);
+  -webkit-backface-visibility: hidden;
 	transform: scale(1);
   -ms-transform: scale(1);
 	-webkit-transition: 1s ease;
