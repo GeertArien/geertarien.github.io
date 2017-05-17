@@ -53,8 +53,8 @@ better solution.
 - [Chapter 8: Writing generic functions][chapter8]
 - [Chapter 9: Defining new types][chapter9]
 - [Chapter 10: Managing memory and low-level data structures][chapter10]
-- Chapter 11: Defining abstract data types
-- Chapter 12: Making class objects act like values
+- [Chapter 11: Defining abstract data types][chapter11]
+- [Chapter 12: Making class objects act like values][chapter12]
 - Chapter 13: Using inheritance and dynamic binding
 - Chapter 14: Managing memory (almost) automatically
 - Chapter 15: Revisiting character pictures
