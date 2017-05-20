@@ -47,6 +47,30 @@ hr {
   border-bottom: 1px dotted #DFDFDF;
 }
 
+ol {
+  margin-left: 2em;
+}
+
+span.MJXc-display {
+  margin: 1.5em 0em !important;
+}
+
+.table {
+  width: 100%;
+  margin: 1.5em 0em;
+  border-collapse: collapse;
+  font-size: $small-font-size;
+  line-height: $small-line-height;
+
+  > table, td, th {
+    border: 1px solid black;
+  }
+
+  td, th {
+    padding: 10px;
+  }
+}
+
 /**
   * General layout
   */
