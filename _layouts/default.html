@@ -24,16 +24,9 @@
     <script src="{{ "/assets/javascripts/jquery-3.1.1.min.js" | relative_url }}"></script>
 
     {% if page.math %}
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        displayAlign: "left",
-      });
-    </script>
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
-
     {% endif %}
 
     {% if page.custom_js %}
