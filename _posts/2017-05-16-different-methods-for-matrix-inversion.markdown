@@ -2,6 +2,7 @@
 layout: post
 title:  "Different methods for matrix inversion"
 date:   2017-05-15 12:33:47 +0100
+last_modified_at: 2017-05-22
 categories: general
 sidebar: true
 text: true
@@ -14,24 +15,24 @@ allows us to compute the reverse of a transformation, i.e. a transformation that
 undoes another transformation. There are several ways to calculate the inverse
 of a matrix. We'll be taking a look at two well known methods, Gauss-Jordan
 elimination and the adjoint method, and one lesser known method, the partition
-method, and show how to implement these algorithms in C++ for a set of arbitrary
+method. We'll show how to implement each method in C++ for arbitrary
 \\( 3 \times 3 \\) matrices.
 
-We'll test the performance of our algorithms with an array of arbitrary
+We test the performance of our algorithms with an array of arbitrary
 \\( 3 \times 3 \\) matrices for which we'll compute the inverse. An important
-point to consider is that only **invertible/nonsingular** matrices have an inverse.
-We can calculate and check the determinant of a matrix to see if it's invertible
-or not, as the determinant of a singular matrix is zero and the determinant of a
-nonsingular matrix is nonzero. We'll use a brute force method to generate our
-arbitrary matrices, which means we'll keep generating random matrices until we
-have enough matrices for which the determinant is nonzero (conveniently ignoring
-the fact that we'll generate a few ill conditioned matrices that are nearly
-singular).
+point to consider is that only [invertible/nonsingular][invertible] matrices
+have an inverse. We can calculate and check the [determinant] of a matrix to
+see if it's invertible or not, as the determinant of a singular matrix is zero
+and the determinant of a nonsingular matrix is nonzero. We'll use a brute force
+method to generate our arbitrary matrices, which means we'll keep generating
+random matrices until we have enough matrices for which the determinant is
+nonzero (conveniently ignoring the fact that we'll generate a few
+[ill conditioned matrices][condition number] that are nearly singular).
 
-We'll create a function that takes three arguments, a function pointer to
+We start by creating a function that takes three arguments, a function pointer to
 a function that returns (a random) integer and two floating-point numbers
-\\(min\\) and \\(max\\). This function will returns a random \\( 3 \times 3 \\)
-Matrix for which each element lies in the range \\([min, max]\\):
+\\(min\\) and \\(max\\). This function returns a random \\( 3 \times 3 \\)
+matrix for which each element lies in the range \\([min, max]\\):
 
 {% highlight cpp %}
 #include <cmath>
@@ -50,7 +51,7 @@ Matrix generate_random_matrix(int random(), float min, float max)
 }
 {% endhighlight %}
 
-Next we'll call this function from our main program and check, using a tolerance
+Next we call this function from our main program and check, using a tolerance
 value, if the returned Matrix has a determinant which is nonzero. We keep
 repeating this process until we have 1.000.000 invertible matrices. To calculate
 the determinant of a \\( 3 \times 3 \\) matrix, we use the following formula:
@@ -69,9 +70,10 @@ det(A)& =\begin{vmatrix}
 \end{equation}
 $$
 
-For the random integers we pass the `rand()` function from `<cstdlib>` to our
-random matrix function. Because `rand()` is a pseudo-random number generator, we
-need to seed it before we start using it. We do this by by calling `srand()`.
+For the random integers we pass the *rand()* function from *`<cstdlib>`* to our
+random matrix function. *rand()* is a [pseudo-random number generator] so we
+need to seed it to make sure we generate a unique sequence of random numbers.
+We do this by calling *srand()* with the current time as parameter.
 
 {% highlight cpp %}
 #include <vector>
@@ -105,15 +107,16 @@ calculate the inverse.
 ## Gauss-Jordan Elimination
 
 Gauss-Jordan Elimination is an extension of Gaussian Elimination, an algorithm
-for solving systems of linear equations. Both algorithms make use row of
+for solving systems of linear equations. Both algorithms make use of row
 operations to solve the system, however the difference between the two is that
 Gaussian Elimination helps to put a matrix in [row echelon form], while
 Gauss-Jordan Elimination puts a matrix in [reduced row echelon form].
 Gauss-Jordan Elimination is a much less efficient method for solving systems of
 linear equations, compared to Gaussian Elimination, however it's an excellent
-method for calculating the inverse of a Matrix.
+method for calculating the inverse of a matrix.
 
-As an example we'll calculate the inverse of the \\( 2 \times 2 \\) matrix A.
+As an example we'll calculate the inverse of the \\( 2 \times 2 \\) matrix
+\\( A \\).
 
 $$
 A = \left[\begin{matrix}
@@ -122,9 +125,9 @@ A = \left[\begin{matrix}
 \end{matrix}\right]
 $$
 
-First we adjoin the idendity matrix to the right side of A then we'll apply
-row operations untill the matrix on the left side is reduced to the identity
-matrix.
+First we adjoin the [identity matrix] to the right side of \\( A \\) then we'll
+apply row operations until the matrix on the left side is reduced to the
+identity matrix.
 
 $$
 \begin{align*}
@@ -147,7 +150,8 @@ $$
 \end{align*}
 $$
 
-The inverse of matrix is A is the \\( 2 \times 2 \\) matrix on the right side.
+The inverse of matrix is \\( A \\) is the \\( 2 \times 2 \\) matrix on the right
+side.
 
 $$
 A^{-1} = \left[\begin{matrix}
@@ -161,10 +165,10 @@ For our implementation we have split the algorithm into four distinct parts:
 1. Adding a unit matrix to the right side of our matrix.
 2. Partial pivoting to reduce [round-off errors], which is a negative side-effect
 of the way numbers are stored on a computer.
-3. Performing row operations to reduce our matrix to a diagonal matrix.
+3. Performing row operations to reduce our matrix to a [diagonal matrix].
 4. Reducing the diagonal matrix to a unit matrix.
 
-We make the Gauss-Jordan inversion method a member of our matrix class, we pass
+We make the Gauss-Jordan inversion method a member of our matrix class and pass
 and return the output matrix as a reference, that way we avoid creating and
 copying matrix objects during the function call.
 
@@ -223,37 +227,37 @@ Matrix& Matrix::calculate_inverse_gause(Matrix& out) const
 }
 {% endhighlight %}
 
-One of the advantages of this method is that it features fewer arithmetic
-operations compared to other methods. The disadvantage is that if features quite
-a lot of `if` statements and loops that cannot be unrolled. That's why this
-method is preferred when working with large matrices or matrices with a
-structure that can be exploited.
+One of the advantages of the Gauss-Jordan method is that it features fewer
+arithmetic operations compared to other methods. The disadvantage is that it
+features quite a lot of `if` statements and loops that cannot be unrolled.
+That's why this method is preferred when working with large matrices or matrices
+with a structure that can be exploited.
 
 ## Classical Adjoint method
 
-The classical adjoint of a matrix A is the [transpose] of the matrix of cofactors
-of A. Once we have the adjoint we can compute the inverse of A by
-dividing the adjoint matrix by the determinant of A.
+The [classical adjoint] of a matrix \\( A \\) is the [transpose] of the matrix
+of cofactors of \\( A \\). Once we have the adjoint we can compute the inverse
+of \\( A \\) by dividing the adjoint matrix by the determinant of \\(A\\).
 
 $$
 A^{-1} = \frac{adj A}{|A|}
 $$
 
-We can compute the cofactors of a matrix by computing the corresponding [minor],
-negating every other element.
+We can compute the cofactors of a matrix by computing the corresponding [minor]
+for each element of the original matrix, negating every other element.
 
 $$
 C^{ij} = (-1)^{i+j}M^{ij}
 $$
 
 Lets take a look at an example. We want to compute the inverse of the
-\\( 3 \times 3 \\) matrix A.
+\\( 3 \times 3 \\) matrix \\( A \\).
 
 $$
 A = \begin{bmatrix}1 & 2 & 3\\ 0 & 1 & 4\\ 5 & 6 & 1\end{bmatrix}
 $$
 
-First we compute the cofactors of matrix A.
+First we compute the cofactors of matrix \\( A \\).
 
 $$
 \begin{align*}
@@ -282,8 +286,8 @@ adj A = \begin{bmatrix}C^{11} & C^{12} & C^{13}\\
 \end{align*}
 $$
 
-Now we can compute the inverse by dividing the classical adjoint of A by the
-determinant of A.
+Now we can compute the inverse by dividing the classical adjoint of \\( A \\)
+by the determinant of \\( A \\).
 
 $$
 \begin{align*}
@@ -334,12 +338,13 @@ it is the method of choice in most geometric applications.
 
 ## Partition method
 
-The [partition (or escalator) method][partition method] is a less famous recursive method for
-computing the inverse of a square matrix. The partition method is based on the
-fact that if the inverse of square matrix \\(A_{n}\\) of order n is known, then
-the inverse of the matrix \\(A_{n+1}\\) can be obtained by adding (n+1)th row
-and (n+1)th column to \\(A_{n}\\). We do this by, as the name of the method
-suggests, partitioning our matrix into 4 smaller sub-matrices.
+The [partition (or escalator) method][partition method] is a less famous
+[recursive] method for computing the inverse of a square matrix. The partition
+method is based on the fact that if the inverse of square matrix \\(A_{n}\\) of
+order \\(n\\) is known, then the inverse of the matrix \\(A_{n+1}\\) can be
+obtained by adding \\((n+1)th\\) row and \\((n+1)th\\) column to \\(A_{n}\\). We
+do this by, as the name of the method suggests, partitioning our matrix into 4
+smaller submatrices.
 
 $$
 \begin{align}
@@ -387,9 +392,9 @@ d &= a_{(n + 1)(n + 1)}
 \end{align*}
 $$
 
-Now we can calculate the inverse of matrix \\(A_{n}\\) using the classical
+We can calculate the inverse of matrix \\(A_{n}\\) using the classical
 adjoint or Gauss-Jordan method. Once we have the inverse of matrix \\(A_{n}\\)
-we can compute the inverse of the other sub-matrices of matrix \\(A_{n+1}\\)
+we can compute the inverse of the other submatrices of matrix \\(A_{n+1}\\)
 using the following formulas.
 
 $$
@@ -452,14 +457,14 @@ C = \begin{bmatrix}5 & 6\end{bmatrix}\quad
 d = 1
 $$
 
-First we compute the inverse of A by using the classical adjoint method.
+First we compute the inverse of \\(A\\) by using the classical adjoint method.
 
 $$
 A^{-1} = \begin{bmatrix}1 & 2\\ 0 & 1\end{bmatrix}^{-1} =
          \begin{bmatrix}1 & -2\\ 0 & 1\end{bmatrix}
 $$
 
-Now that we have the inverse of A we can compute the inverse of the matrix
+Now that we have the inverse of \\(A\\) we can compute the inverse of the matrix
 \\(A_{3}\\) using the above mentioned formulas.
 
 $$
@@ -504,8 +509,9 @@ A_{3}^{-1}
 $$
 
 For our implementation we follow the same procedure as in our example. First we
-compute the inverse of submatrix A, next we solve the equation for each element
-of the inverse matrix \\(A_{3}^{-1}\\).
+compute the inverse of submatrix \\(A\\), using the classical adjoint method.
+Next we solve the equation for each element of the inverse matrix
+\\(A_{3}^{-1}\\).
 
 {% highlight cpp %}
 #include "matrix.h"
@@ -561,7 +567,7 @@ Matrix& Matrix::calculate_inverse_partition(Matrix& out) const
 The partition method is fairly complex compared to the other methods we have
 covered. The main advantage that it provides is that it allows us to compute
 the inverse of a matrix by recursively computing the inverses of smaller
-sub-matrices. The method can also be combined with any other matrix inversion
+submatrices. The method can also be combined with any other matrix inversion
 method, as we have in our example and implementation with the classical adjoint
 method.
 
@@ -592,8 +598,9 @@ The classical adjoint method has the advantage that it's structure is more
 optimized to benefit from parallel computing, while the Gauss-Jordan and
 partitioning method are more suited for matrices of larger order.
 
-You can use the download button below to download the complete project for this
-article.
+Leave a comment below in case you have some questions or want to give some
+feedback. You can also use the download button below to download the complete
+source code for this article.
 
 [row echelon form]: https://en.wikipedia.org/wiki/Row_echelon_form
 [reduced row echelon form]: https://en.wikipedia.org/wiki/Row_echelon_form#Reduced_row_echelon_form
@@ -601,3 +608,11 @@ article.
 [minor]: https://en.wikipedia.org/wiki/Minor_(linear_algebra)
 [transpose]: https://en.wikipedia.org/wiki/Transpose
 [partition method]: https://paramanands.blogspot.be/2012/08/matrix-inversion-partition-method.html
+[invertible]: https://en.wikipedia.org/wiki/Invertible_matrix
+[determinant]: https://en.wikipedia.org/wiki/Determinant
+[condition number]: https://en.wikipedia.org/wiki/Condition_number
+[pseudo-random number generator]: https://en.wikipedia.org/wiki/Pseudorandom_number_generator
+[identity matrix]: https://en.wikipedia.org/wiki/Identity_matrix
+[diagonal matrix]: https://en.wikipedia.org/wiki/Diagonal_matrix
+[classical adjoint]: https://en.wikipedia.org/wiki/Adjugate_matrix
+[recursive]: https://en.wikipedia.org/wiki/Recursion_(computer_science)
