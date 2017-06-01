@@ -37,10 +37,9 @@ delegation and dynamic binding, this book has been a great tool to improve my
 C++ knowledge.
 
 Below you can find the chapter titles along with a link to my solutions for that
-chapter. Please keep in mind that I'm currently still working my way through the
-chapters so this list will be updated frequently. Don't hesitate to comment, or
-reach out to me in any other way, if you find an error or if you have a
-better solution.
+chapter. Don't hesitate to leave comment below, or reach out to me in any other
+way, if you find an error or if you have a better solution to any of the
+exercises.
 
 - [Chapter 0: Getting started][chapter0]
 - [Chapter 1: Working with strings][chapter1]
@@ -55,10 +54,10 @@ better solution.
 - [Chapter 10: Managing memory and low-level data structures][chapter10]
 - [Chapter 11: Defining abstract data types][chapter11]
 - [Chapter 12: Making class objects act like values][chapter12]
-- Chapter 13: Using inheritance and dynamic binding
-- Chapter 14: Managing memory (almost) automatically
-- Chapter 15: Revisiting character pictures
-- Chapter 16: Where do we go from here?
+- [Chapter 13: Using inheritance and dynamic binding][chapter13]
+- [Chapter 14: Managing memory (almost) automatically][chapter14]
+- [Chapter 15: Revisiting character pictures][chapter15]
+- [Chapter 16: Where do we go from here?][chapter16]
 
 
 [c-accelerated]: https://www.amazon.com/Accelerated-C-Practical-Programming-Example/dp/020170353X
