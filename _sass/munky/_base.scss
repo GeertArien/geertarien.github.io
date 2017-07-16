@@ -196,6 +196,14 @@ img.center-block {
 }
 
 /**
+ * WebGL canvas
+ */
+
+canvas#gl-canvas {
+  width: 100%;
+}
+
+/**
  * Headings
  */
  article.heading {

@@ -30,7 +30,7 @@ prefabs, physics and scripting.
 You control the ball with the arrow keys. The goal of the game is to collect all
 the collectables, after which you can restart the game by pressing the R button.
 
-<a href="/assets/webgl/roll-a-ball" target="_blank" class="btn">
+<a href="/assets/javascripts/webgl/roll-a-ball" target="_blank" class="btn">
   Play Roll-a-ball
 </a>
 
@@ -52,7 +52,7 @@ asteroids. You control the spaceship with the arrow keys, shooting can be done
 using the left mouse button or the spacebar. The game ends when your ship
 is destroyed, after which you can restart the game by pressing the R button.
 
-<a href="/assets/webgl/space-shooter" target="_blank" class="btn">
+<a href="/assets/javascripts/webgl/space-shooter" target="_blank" class="btn">
   Play Space Shooter
 </a>
 
