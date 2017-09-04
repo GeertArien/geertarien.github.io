@@ -202,7 +202,7 @@ Next up we define the camera using three vectors, one for the position of the
 camera (**eye**), one to specify where the camera is pointing at (**at**) and the
 final vector specifies the up direction of the camera (**up**). Because we're using
 a static camera we can also create our view transform matrix in this step. We
-use the three camera vectors to construct a transformation matrix in the `lookAt()`
+use the three camera vectors to construct a transformation matrix in the [lookAt()]
 function. This transformation matrix takes the vertice positions from world space
 coordinates to camera space, also referred to as view or eye space.
 
@@ -629,6 +629,7 @@ free to drop a comment below!
 [drawarrays]: https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/drawArrays
 [column vectors]: https://en.wikipedia.org/wiki/Row_and_column_vectors
 [interpolation]: https://en.wikipedia.org/wiki/Interpolation
+[lookAt()]: {% post_url 2017-07-19-breakdown-of-the-lookAt-function-in-OpenGL %}
 
 <script id="vertex-shader" type="x-shader/x-vertex">
   attribute vec4 vPosition;

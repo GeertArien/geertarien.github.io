@@ -20,26 +20,35 @@ function createCube(size)
   ];
 
 
-  this.faces_as_triangles = function ()
+  this.faces_as_triangles = function (normals = false)
   {
     var arr = [];
 
-    this._quad_triangles( arr, 1, 2, 6, 5 );
-    this._quad_triangles( arr, 5, 4, 0, 1 );
-    this._quad_triangles( arr, 1, 0, 3, 2 );
-    this._quad_triangles( arr, 2, 3, 7, 6 );
-    this._quad_triangles( arr, 7, 3, 0, 4 );
-    this._quad_triangles( arr, 7, 4, 5, 6 );
+    this._quad_triangles( arr, normals, 1, 2, 6, 5 );
+    this._quad_triangles( arr, normals, 5, 4, 0, 1 );
+    this._quad_triangles( arr, normals, 1, 0, 3, 2 );
+    this._quad_triangles( arr, normals, 2, 3, 7, 6 );
+    this._quad_triangles( arr, normals, 7, 3, 0, 4 );
+    this._quad_triangles( arr, normals, 7, 4, 5, 6 );
 
     return arr;
   }
 
-  this._quad_triangles = function(arr, a, b, c, d)
+  this._quad_triangles = function(arr, normals, a, b, c, d)
   {
-      var indices = [ a, b, c, a, c, d ];
-      for ( var i = 0; i < indices.length; ++i ) {
-          arr.push( this.vertices[indices[i]] );
-      }
+    var t1 = vec4(subtract(this.vertices[b], this.vertices[a]));
+    var t2 = vec4(subtract(this.vertices[c], this.vertices[b]));
+    var normal = vec4(normalize(cross(t1, t2)));
+    normal[3] = 0.0;
+
+    var indices = [ a, b, c, a, c, d ];
+    for ( var i = 0; i < indices.length; ++i ) {
+        arr.push( this.vertices[indices[i]] );
+        if (normals)
+        {
+            normals.push(normal);
+        }
+    }
   }
 
   this.edges_as_line_segments = function ()
