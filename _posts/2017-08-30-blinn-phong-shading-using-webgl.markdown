@@ -5,6 +5,7 @@ date:   2017-08-30 12:33:47 +0100
 categories: general
 sidebar: true
 text: true
+math: true
 download: rotating-cube-shaded.zip
 custom_js:
 - webgl/common/webglUtils
@@ -24,6 +25,8 @@ take a look at how we can add Blinn-Phong shading using WebGL.
   Sorry; your web browser does not support HTML5’s canvas element.
 </canvas>
 
+# Theory
+
 The original Phong lighting model classifies the light coming into the eye into
 four distinct categories. A **diffuse contribution** that represents light
 shattered in every direction evenly. A **specular contribution** that represents
@@ -41,15 +44,26 @@ compute the other two contributions.
 
 The ambient contribution is the easiest of the three to compute. It is used to
 account for light that bounces more than one time before it enters the eye, so
-called ambient light. To compute it we simply multiply the ambient value of the
-light with the ambient value of the surface we wish to shade.
+called ambient light. To compute it we simply multiply the global ambient value
+with the ambient value of the surface we wish to shade.
+
+$$
+\mathbf{c}_{amb} = \mathbf{g}_{amb} * \mathbf{m}_{amb}
+$$
 
 The diffuse contribution represents light that travels directly from the light
 source to the shading point and is shattered in all directions evenly due
 to the *rough nature* of the surface material. When computing this contribution we
 have to take into account **Lambert's Law**, which states that surfaces
-perpendicular to rays of light receive more photons per unit area than surfaces
+perpendicular to rays of light receive more light per unit area than surfaces
 at a more glancing angle.
+
+{% include image.html
+name="lamberts-law.png"
+caption="In both cases the distance between the rays is the same. The surface
+that is more perpendicular to the incoming light receives more light per unit
+area."
+%}
 
 To compute the diffuse contribution we first multiply the diffuse component of
 the light with the diffuse component of the object. To account for Lambert's Law
@@ -57,31 +71,67 @@ we multiply this value with the cosine of the angle between the direction of the
 light and the normal of the surface we are shading. We become the cosine by
 taking the dot product of the light direction vector and the surface normal.
 
+$$
+\mathbf{c}_{diff} = (\mathbf{l}_{diff} * \mathbf{m}_{diff}) (\mathbf{n} \cdot \mathbf{l})
+$$
+
 Likewise to the diffuse contribution, the specular component represents light that
 travels directly from the light source to the shading point. Different from the
 diffuse component, the specular contribution represents light that is reflected
 mostly in a perfect mirror bounce, it's what gives surfaces a *shiny appearance*.
 In the Phong lighting model the specular contribution is computed by taking the
-cosine of the angle between the light reflectance vector and the view direction
+cosine of the angle between the reflectance vector and the view direction
 vector. Which we once again become by taking the dot product of these two vectors.
-This value is taken to the power of the material shininess value, this specifies
-how big or small the hotspot around the reflectance vector is, a smaller
-shininess value produces a larger hotspot and a larger value produces a smaller
-sharper hotspot. Finally the resulting value is multiplied with the product of the
-specular value of the light and the surface material.
+
+{% include image.html
+name="phong-specular.png"
+caption="Phong's model for specular reflection uses the angle between the
+view direction vector and the reflectance vector."
+%}
+
+The result of the dot product is taken to the power of the material shininess
+value, this specifies how big or small the hotspot around the reflectance vector
+is, a smaller shininess value produces a larger hotspot and a larger value
+produces a smaller sharper hotspot. Finally the resulting value is multiplied
+with the product of the specular value of the light and the surface material.
+
+$$
+\mathbf{c}_{spec} = (\mathbf{l}_{spec} * \mathbf{m}_{spec}) (\mathbf{v} \cdot \mathbf{r})^{m_{shn}}
+$$
 
 Blinn's modification is an optimization for the way the specular contribution is
-computed. Instead of using the cosine of the angle between the light reflectance
+computed. Instead of using the cosine of the angle between the reflectance
 and view direction vectors, Blinn proposes to use the cosine value between the
 halfway vector and the surface normal. The halfway vector is the average of
 the view direction vector and the light direction vector. This way we avoid
-computing the light reflectance vector. Another optimization that Blinn
+computing the reflectance vector. Another optimization that Blinn
 introduced is that we can treat the view direction as a constant for objects
 that are far away from the viewer. Likewise we can treat the light direction
 vector as a constant for objects that are far away from the light source.
 If both the viewer and the light source are far away from the object we only
 have to compute the halfway vector once for the entire object and the given
 light source.
+
+{% include image.html
+name="blinn-specular.png"
+caption="Blinn's model for specular reflection uses the angle between the
+surface normal and the halfway vector."
+%}
+
+Blinn's formula for specular reflection is very similar to Phong's formula,
+only the factors of the dot product are changed.
+
+$$
+\mathbf{c}_{spec} = (\mathbf{l}_{spec} * \mathbf{m}_{spec}) (\mathbf{n} \cdot \mathbf{h})^{m_{shn}}
+$$
+
+Finally we become the light value by adding up all contributions.
+
+$$
+\mathbf{c}_{lit} = \mathbf{c}_{amb} + \mathbf{c}_{diff} + \mathbf{c}_{spec}
+$$
+
+# Implementation
 
 Now that we covered the basics of the Blinn-Phong lighting model we can move on
 to the implementation. We start by defining the location and lighting properties
