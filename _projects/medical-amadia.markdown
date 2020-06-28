@@ -10,8 +10,7 @@ repo: medical-amadia
 image: /assets/images/projects/medical-amadia.jpg
 ---
 For an international internship I spent three months in Madagascar. Three weeks
-of those I was traveling through the country, from the east to the west coast
-(check the [photography section](/photography/) for some pictures of that trip).
+of those I was traveling through the country, from the east to the west coast.
 The other two and a half months I stayed in Antananarivo, the capital of
 Madagascar, implementing a medical ERP system for Amadia, a non-profit
 organization.

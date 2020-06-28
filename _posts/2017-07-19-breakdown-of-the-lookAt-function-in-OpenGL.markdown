@@ -31,7 +31,7 @@ below.
 {% highlight cpp %}
 mat4 LookAt(vec3 eye, vec3 at, vec3 up)
 {
-  vec3 zaxis = normalize(eye - at);    
+  vec3 zaxis = normalize(at - eye);    
   vec3 xaxis = normalize(cross(zaxis, up));
   vec3 yaxis = cross(xaxis, zaxis);
 
@@ -70,13 +70,13 @@ pointing to the right, when looking in the direction of the camera, the *y*-axis
 up and the *z*-axis will be pointing in the opposite direction of the camera, so
 the camera will be looking in the negative *z* direction.
 
-First we create the *z*-axis basis vector by subtracting the *at* vector from the
-*eye* vector. We now have a vector that defines the displacement from the camera
-position to the position where the camera is looking at. All we need to do
+First we create the *z*-axis basis vector by subtracting the *eye* vector from the
+*at* vector. We now have a vector that defines the displacement from the position 
+where the camera is looking at to the position of the camera. All we need to do
 now is [normalize] the vector to get the first basis vector.
 
 {% highlight cpp %}
-  vec3 xaxis = normalize(cross(zaxis, up));
+  vec3 zaxis = normalize(at - eye);
 {% endhighlight %}
 
 The *z*-axis basis vector we computed is pointing in the direction of the camera,

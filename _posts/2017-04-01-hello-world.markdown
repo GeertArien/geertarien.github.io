@@ -74,8 +74,7 @@ following topics showing up in future articles:
 
 So if any of these topics spark your interest then be sure to check back often,
 my aim is to post at least one article each month. In the meantime you can check
-out the [project section](/projects/) to see what I've been up to until now or
-go to the [photography page](/photography/) to stare in awe at some of my works.  
+out the [project section](/projects/) to see what I've been up to until now.  
 
 [hello-world]: https://en.wikipedia.org/wiki/%22Hello,_World!%22_program
 [couscous]: https://dagelijksekost.een.be/gerechten/gevulde-paprikas-met-couscous-en-feta
