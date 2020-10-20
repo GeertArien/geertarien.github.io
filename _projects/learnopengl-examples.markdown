@@ -11,7 +11,7 @@ image: /assets/images/projects/learnopengl-examples.jpg
 The tutorials you can find on [learnopengl.com][learnopengl] are a great way
 to learn the basics of 3D rendering and get familiar with the OpenGL API. 
 For simplicity's sake  I decided to implement them in C instead of C++. 
-And instead of using raw opengl I used the [Sokol libraries][sokol libraries],
+And instead of using raw opengl I used the [Sokol libraries][sokol],
 which makes it a lot easier to support multiple platforms.
 
 {% include image.html
@@ -21,15 +21,15 @@ alt="Refraction Backpack"
 center=true
 %}
 
-The [Sokol libraries][sokol libraries] are a set of simple [stb][STB-style] 
+The [Sokol libraries][sokol] are a set of simple [STB-style][stb] 
 cross-platform libraries written in C. It provides us with all the 
 functionality we need to write GUI applications that run on Windows, Linux, 
 MacOS and WebAssembly. Sokol also supports iOS and Android, but I decided 
 to ignore native builds for mobile platforms. A big motivation to use 
-these libraries is the [wasm][WebAssembly] support, it allows me to compile 
+these libraries is the [WebAssembly][wasm] support, it allows us to compile 
 the examples for the web and provide [live demos][live-demos].
 
-The sokol libraries coms with a simple 3D-API wrapper with support for 
+[Sokol][sokol] comes with a simple 3D-API wrapper with support for 
 multiple backends: GLES2/WebGL, GLES3/WebGL2, GL3.3, D3D11 and Metal. 
 The shaders are written in GLSL v450 and cross-compiled to other shader
 dialects using [sokol-shdc][sokol-shdc]. Under the hood 
@@ -50,7 +50,7 @@ the link below:
 [Live Demos][live-demos]
 
 [learnopengl]: https://learnopengl.com
-[sokol-libraries]: https://github.com/floooh/sokol
+[sokol]: https://github.com/floooh/sokol
 [stb]: https://github.com/nothings/stb
 [wasm]: https://webassembly.org/
 [sokol-samples]: https://floooh.github.io/sokol-html5/index.html
